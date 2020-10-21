@@ -1,0 +1,81 @@
+{% extends 'books/base.html' %}
+
+
+{% block header %}
+
+<div class="header mb-4">
+    <div
+        class="header-img"
+        style="background-image: url({{ header_img.url }})">
+    </div>
+    <h2 class="text-center">
+        {{ title }}
+    </h2>
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+<table class="table table-bordered table-hover books-table">
+    <thead class="thead-dark">
+        <tr class="table-row table-row__top">
+            <th aria-label="index" scope="col">#</th>
+            <th aria-label="title" scope="col">Title</th>
+            <th aria-label="isbn" scope="col">ISBN</th>
+            <th aria-label="description" scope="col">Description</th>
+            <th aria-label="year" scope="col">Year</th>
+            <th aria-label="copies" scope="col">Copies</th>
+            <th aria-label="author" scope="col">Author</th>
+            <th aria-label="ph" scope="col">Edition</th>
+            <th aria-label="country" scope="col">Country</th>
+            <th aria-label="rating" scope="col">Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+            <tr
+                class="table-row"
+                onclick="window.location.href=`{% url 'library:book_page' book.ISBN %}`"
+            >
+                <td aria-label="index">{{ forloop.counter }}</td>
+                <td aria-label="title">{{ book.title }}</td>
+                <td aria-label="isbn">{{ book.ISBN }}</td>
+                <td aria-label="description">{{ book.description }}</td>
+                <td aria-label="year">{{ book.year_release }}</td>
+                <td aria-label="copies">{{ book.copy_count }}</td>
+                <td aria-label="author">{{ book.author.full_name }}</td>
+                <td aria-label="ph">{{ book.publishing_house }}</td>
+                <td aria-label="country">{{ book.author.country }}</td>
+                <td aria-label="rating">
+                    <form
+                        action="{% url 'library:add_vote' '+' %}"
+                        method="POST" enctype="multipart/form-data"
+                    >
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{book.id}}" />
+                        <button type="submit" class="btn btn-dark btn-sm">
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>
+                    </form>
+                    <form
+                        action="{% url 'library:add_vote' '-' %}"
+                        method="POST" enctype="multipart/form-data"
+                    >
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{book.id}}" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-thumbs-down"></i>
+                        </button>
+                    </form>
+                    <span class="statistic">
+                        Оценили: {{ book.good_votes|add:book.bad_votes }} человек
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

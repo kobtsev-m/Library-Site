@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital@0;1&Noto+Sans+HK:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/books/styles.css" %}" />
+    <link rel="stylesheet" href="{% static "css/books/media.css" %}" />
+    <script src="https://kit.fontawesome.com/04a7c4bbdc.js" crossorigin="anonymous"></script>
+
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="container">
+        <a class="d-flex align-items-center my-3" href="{% url last_page %}">
+            <i class="fas fa-arrow-circle-left mr-2"></i>
+            <span>Back</span>
+        </a>
+        {% block header %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
