@@ -7,7 +7,7 @@ from library import views
 
 urlpatterns = [
     path('', views.main_page, name="base"),
-    path('library/', include('library.urls')),
+    path('', include('library.urls')),
     path('admin/', admin.site.urls, name="admin")
 ]
 

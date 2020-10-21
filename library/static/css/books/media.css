@@ -33,6 +33,12 @@
     .table-row {
         grid-template-columns: 1fr 5fr;
     }
+    .table th[aria-label="title"] {
+        border-top-right-radius: 10px;
+    }
+    .table tr:last-child td[aria-label="title"] {
+        border-bottom-right-radius: 10px;
+    }
     .book-block {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr;
@@ -40,6 +46,9 @@
     }
     .book-img {
         height: 30em;
+    }
+    .book-table .ph-logo {
+        display: none;
     }
 }
 

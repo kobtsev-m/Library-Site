@@ -1,11 +1,12 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, reverse
 from django.template import loader
-from library.models import Book, ContentImage, Comment
+from library.models import PublishingHouse, Book, ContentImage, Comment
 from django.utils import timezone
+from pycountry import countries
 
 def main_page(request):
-    template = loader.get_template("main_page.html")
+    template = loader.get_template("index.html")
 
     preview_images = ContentImage.objects.filter(name__startswith="preview")
     preview_images = {obj.name: obj.image for obj in preview_images}
@@ -29,7 +30,7 @@ def books(request):
         "title": "Books",
         "header_img": header_img,
         "books": books,
-        "last_page": "base"
+        "last_page": reverse('base')
     }
 
     return HttpResponse(template.render(books_data, request))
@@ -41,16 +42,18 @@ def book_page(request, isbn):
     book = Book.objects.filter(ISBN=isbn)
     if book.exists():
         book = book.first()
+        book.author.country = countries.get(alpha_2=book.author.country).name
     else:
         raise Http404("Страница не найдена")
 
     comments = book.comment_set.order_by('-date')
+    last_page = request.META.get('HTTP_REFERER', reverse('base'))
 
     book_data = {
         "title": book.title,
         "book": book,
         "comments": comments,
-        "last_page": "library:base"
+        "last_page": last_page
     }
 
     return HttpResponse(template.render(book_data, request))
@@ -79,7 +82,7 @@ def add_vote(request, vote):
     if request.method == "POST":
         book_id = request.POST['id']
         if not book_id:
-            return redirect(reverse('library:base'))
+            return redirect(reverse('library:books'))
         else:
             book = Book.objects.filter(id=book_id).first()
 
@@ -90,4 +93,20 @@ def add_vote(request, vote):
 
             book.save()
 
-    return redirect(reverse('library:base'))
+    return redirect(reverse('library:books'))
+
+def ph(request):
+    template = loader.get_template("ph/ph_table.html")
+
+    ph = PublishingHouse.objects.all()
+    for cur_ph in ph:
+        cur_ph.country = countries.get(alpha_2=cur_ph.country).name
+        cur_ph.books = cur_ph.book_set.all()
+
+    ph_data = {
+        "title": "Publishing houses",
+        "ph": ph,
+        "last_page": reverse('base')
+    }
+
+    return HttpResponse(template.render(ph_data, request))

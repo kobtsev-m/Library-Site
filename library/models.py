@@ -7,6 +7,12 @@ class PublishingHouse(models.Model):
     foundation_year = models.SmallIntegerField()
     country = models.CharField(max_length=2)
 
+    image = models.ImageField(
+        upload_to="library/ph_covers/",
+        null=True,
+        blank=True
+    )
+
     def __str__(self):
         return self.name
 

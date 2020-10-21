@@ -1,6 +1,7 @@
-{% extends 'books/base.html' %}
+{% extends 'books/index.html' %}
 
 {% block content %}
+
 {% load mathfilters %}
 
 {# Book Information #}
@@ -37,9 +38,18 @@
                 <th>Author</th>
                 <td>{{ book.author.full_name }}</td>
             </tr>
-            <tr>
-                <th>Edition</th>
-                <td>{{ book.publishing_house }}</td>
+            <tr
+                onclick="window.location.href=`{% url 'library:ph' %}`"
+                style="cursor: pointer"
+            >
+                <th>PH</th>
+                <td class="d-flex align-items-center">
+                    <span>{{ book.publishing_house.name }}</span>
+                    <div
+                        class="ph-logo ml-3"
+                        style="background-image: url({{ book.publishing_house.image.url }})"
+                    ></div>
+                </td>
             </tr>
             <tr>
                 <th>Country</th>
@@ -58,14 +68,13 @@
                                 aria-valuemin="0"
                                 aria-valuemax="100"
                             >
-                                {{ book.good_votes|div:votes_sum|mul:100|floatformat:1 }}%
+                                {{ book.good_votes|div:votes_sum|mul:10|floatformat:1 }}
                             </div>
                         </div>
                     {% else %}
                         Пока никто не оставлял оценок. Станьте первым!
                     {% endif %}
                     {% endwith %}
-                    </div>
                 </td>
             </tr>
         </tbody>
@@ -80,9 +89,9 @@
 
 {% for comment in comments %}
     <div class="comment-block p-3 mb-3">
-        <span class="d-flex"><div class="accent">Name:</div> {{ comment.name }}</span>
-        <span class="d-flex"><div class="accent">Comment:</div> {{ comment.comment }}</span>
-        <span class="comment-date mt-2">{{ comment.date }}</span>
+        <span class="accent">Name:</span><span>{{ comment.name }}</span>
+        <span class="accent">Comment:</span><span>{{ comment.comment }}</span>
+        <span class="comment-date">{{ comment.date }}</span>
     </div>
 {% endfor %}
 
@@ -95,7 +104,7 @@
     >
         {% csrf_token %}
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
         <label for="comment">Comment</label>
         <textarea class="form-control" id="comment" name="comment" rows="3"
                   placeholder="Write your comment here"></textarea>

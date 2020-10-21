@@ -1,3 +1,4 @@
 .idea/
-data.xml
 __pycache__
+data.xml
+db.sqlite3

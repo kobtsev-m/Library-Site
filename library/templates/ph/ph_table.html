@@ -1,0 +1,48 @@
+{% extends "ph/index.html" %}
+
+{% block content %}
+
+<table class="table table-bordered table-dark" >
+  <thead class="text-center">
+    <tr>
+        <th aria-label="logo" scope="col">Logo</th>
+        <th class="d-none d-md-table-cell" aria-label="name" scope="col">Name</th>
+        <th class="d-none d-md-table-cell" aria-label="year" scope="col">Foundating year</th>
+        <th class="d-none d-md-table-cell" aria-label="country" scope="col">Country</th>
+        <th aria-label="books" scope="col">Books</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for current_ph in ph %}
+        <tr>
+            <td align="center" aria-label="logo">
+                <div
+                    class="ph-logo"
+                    style="background-image: url({{ current_ph.image.url }})"
+                ></div>
+                <span class="d-block d-md-none text-center mt-3">
+                    {{ current_ph.name }}
+                </span>
+            </td>
+            <td class="d-none d-md-table-cell" aria-label="name">
+                {{ current_ph.name }}
+            </td>
+            <td class="d-none d-md-table-cell" aria-label="year">
+                {{ current_ph.foundation_year }}
+            </td>
+            <td class="d-none d-md-table-cell" aria-label="country">
+                {{ current_ph.country }}
+            </td>
+            <td aria-label="books">
+                {% for book in current_ph.books %}
+                    <a href="{% url 'library:book_page' book.ISBN %}">
+                        <div class="book-link p-2 m-2">{{ book.title }}</div>
+                    </a>
+                {% endfor%}
+            </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

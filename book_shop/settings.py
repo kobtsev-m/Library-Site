@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '21@0w$4t*7@q6gn#^7w*#*aq=_c0ttqv-l_-x2##=_t@3tkg6q'
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.175']
+ALLOWED_HOSTS = ['192.168.0.175', 'mkobtsev.pythonanywhere.com']
 
 
 INSTALLED_APPS = [

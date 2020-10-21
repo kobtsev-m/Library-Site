@@ -31,12 +31,30 @@ h2 {
 }
 
 /* Books Table */
+.table {
+    border: none;
+}
 .table th, .table td {
     vertical-align: middle !important;
 }
-thead th {
-    border: 0 !important;
+.books-table th {
+    border: none;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
 }
+.books-table th:first-child {
+    border-top-left-radius: 10px;
+}
+.books-table th:last-child {
+    border-top-right-radius: 10px;
+}
+.books-table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+.books-table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
 .table-row {
     display: grid;
     grid-auto-flow: column;
@@ -46,7 +64,7 @@ thead th {
         minmax(90px, 1fr) minmax(70px, 3fr);
     text-align: center;
 }
-tbody .table-row{
+.books-table tbody .table-row{
     cursor: pointer;
 }
 
@@ -84,8 +102,19 @@ tbody .table-row{
 .book-table {
     border-radius: 10px;
 }
+.book-table thead th {
+    border-top: none;
+}
 .book-table th, .book-table td {
     padding: 1.5em;
+}
+.book-table .ph-logo {
+    background-position: center;
+    background-size: cover;
+    filter: grayscale(0.5);
+    width: 2em;
+    height: 2em;
+    border-radius: 0.3em;
 }
 .book-table .progress {
     background-color: #212529 !important;
@@ -105,6 +134,7 @@ tbody .table-row{
 
 .comment-block {
     display: grid;
+    grid-template-columns: 6em 1fr;
     grid-template-rows: repeat(3, 1fr);
     background-color: #fff;
     color: #212529;
@@ -115,10 +145,12 @@ tbody .table-row{
 }
 .comment-block .accent {
     font-weight: bold;
-    width: 6em;
+    min-width: 6em;
 }
 .comment-date {
+    grid-column: 1/3;
     justify-self: end;
+    margin-top: 1em;
 }
 
 .comment-form-title {
