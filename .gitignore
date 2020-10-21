@@ -2,3 +2,7 @@
 __pycache__
 data.xml
 db.sqlite3
+
+# for pythonanywhere
+
+/static

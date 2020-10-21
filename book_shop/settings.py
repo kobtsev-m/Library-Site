@@ -10,7 +10,6 @@ ALLOWED_HOSTS = ['192.168.0.175', 'mkobtsev.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'library',
-    'crispy_forms',
     'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,8 +19,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup'
 ]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 MIDDLEWARE = [
